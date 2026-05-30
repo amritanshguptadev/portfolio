@@ -660,4 +660,31 @@ html, body, #root, .page-content {
   }
 }
 
+/* 6. Navbar Mobile Spacing & Logo Sizing adjustments */
+.nav-logo-container {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .nav-logo-container {
+    width: 58px;
+    height: 58px;
+  }
+}
+
+.navbar-wrapper {
+  padding: 0 1.5rem !important;
+}
+
+@media (min-width: 768px) {
+  .navbar-wrapper {
+    padding: 0 clamp(1rem, 4vw, 3rem) !important;
+  }
+}
+
 

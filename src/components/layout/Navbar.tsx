@@ -14,7 +14,7 @@ const NAV_LINKS = [
 
 /* ── Creative geometric diamond logo ──────────────── */
 const LogoMark = () => (
-  <svg width="58" height="58" viewBox="0 0 58 58" fill="none" aria-hidden="true">
+  <svg viewBox="0 0 58 58" fill="none" aria-hidden="true" className="nav-logo-svg" style={{ width: "100%", height: "100%" }}>
     <defs>
       <linearGradient id="navLg1" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" stopColor="var(--color-accent-gold)" />
@@ -128,8 +128,8 @@ const Hamburger = ({ open, onClick }: { open: boolean; onClick: () => void }) =>
     aria-expanded={open}
     onClick={onClick}
     style={{
-      width: 40,
-      height: 40,
+      width: 44,
+      height: 44,
       borderRadius: "50%",
       border: "1px solid var(--color-border-strong)",
       background: "var(--color-card)",
@@ -145,16 +145,16 @@ const Hamburger = ({ open, onClick }: { open: boolean; onClick: () => void }) =>
     }}
   >
     <span style={{
-      width: 18, height: 2, background: open ? "var(--color-accent-gold)" : "var(--color-body)",
+      width: 20, height: 2, background: open ? "var(--color-accent-gold)" : "var(--color-body)",
       borderRadius: 2, transition: "all 0.3s",
       transform: open ? "rotate(45deg) translateY(7px)" : "none",
     }} />
     <span style={{
-      width: 18, height: 2, background: open ? "transparent" : "var(--color-body)",
+      width: 20, height: 2, background: open ? "transparent" : "var(--color-body)",
       borderRadius: 2, transition: "all 0.3s", opacity: open ? 0 : 1,
     }} />
     <span style={{
-      width: 18, height: 2, background: open ? "var(--color-accent-gold)" : "var(--color-body)",
+      width: 20, height: 2, background: open ? "var(--color-accent-gold)" : "var(--color-body)",
       borderRadius: 2, transition: "all 0.3s",
       transform: open ? "rotate(-45deg) translateY(-7px)" : "none",
     }} />
@@ -195,16 +195,16 @@ const Navbar = () => {
       }}
     >
       <div
-        className="section-wrapper"
+        className="section-wrapper navbar-wrapper"
         style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}
       >
         {/* ── Logo ── */}
         <NavLink
           to="/"
           id="nav-logo"
-          style={{ display: "flex", alignItems: "center", gap: "0.75rem", textDecoration: "none" }}
+          style={{ display: "flex", alignItems: "center", gap: "clamp(0.4rem, 2vw, 0.75rem)", textDecoration: "none" }}
         >
-          <motion.div whileHover={{ rotate: 45, scale: 1.08 }} transition={{ duration: 0.4 }}>
+          <motion.div whileHover={{ rotate: 45, scale: 1.08 }} transition={{ duration: 0.4 }} className="nav-logo-container">
             <LogoMark />
           </motion.div>
           <div style={{ lineHeight: 1.1 }}>
@@ -213,7 +213,7 @@ const Navbar = () => {
                 style={{
                   fontFamily: "var(--font-heading)",
                   fontWeight: 900,
-                  fontSize: "1.35rem",
+                  fontSize: "clamp(1.1rem, 4.5vw, 1.35rem)",
                   color: "var(--color-heading)",
                   letterSpacing: "-0.02em",
                 }}
@@ -224,7 +224,7 @@ const Navbar = () => {
                 style={{
                   fontFamily: "var(--font-heading)",
                   fontWeight: 900,
-                  fontSize: "1.35rem",
+                  fontSize: "clamp(1.1rem, 4.5vw, 1.35rem)",
                   background: "linear-gradient(135deg, var(--color-accent-gold), var(--color-accent-gold-bright))",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
@@ -236,7 +236,7 @@ const Navbar = () => {
             </div>
             <span style={{
               fontFamily: "var(--font-body)",
-              fontSize: "0.65rem",
+              fontSize: "0.6rem",
               color: "var(--color-body-faint)",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
