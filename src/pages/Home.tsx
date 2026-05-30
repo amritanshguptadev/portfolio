@@ -134,7 +134,7 @@ const TermLine = ({ text, delay, color = "#00FF41" }: { text: string; delay: num
   const [visible, setVisible] = useState(false);
   useEffect(() => { const t = setTimeout(() => setVisible(true), delay); return () => clearTimeout(t); }, [delay]);
   return visible ? (
-    <div style={{ fontFamily: "'Courier New', monospace", fontSize: "0.82rem", color, lineHeight: 1.9 }}>
+    <div style={{ fontFamily: "'Courier New', monospace", fontSize: "clamp(0.72rem, 2.2vw, 0.82rem)", color, lineHeight: 1.9 }}>
       {text}
     </div>
   ) : null;
@@ -239,13 +239,9 @@ const Home = () => {
         padding: "0 1.5rem",
         position: "relative", zIndex: 1,
       }}>
-        <div style={{
-          maxWidth: 1200, width: "100%",
-          display: "flex", flexWrap: "wrap", gap: "5rem",
-          alignItems: "center", justifyContent: "center",
-        }}>
+        <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20" style={{ maxWidth: 1200, width: "100%" }}>
           {/* Left text block */}
-          <div style={{ flex: "1 1 500px", maxWidth: 620 }}>
+          <div className="w-full lg:flex-1" style={{ maxWidth: 620 }}>
             <motion.div
               initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
               style={{
@@ -286,8 +282,7 @@ const Home = () => {
               <span style={{ color: "var(--color-inline-violet)", fontWeight: 500 }}>full-stack apps</span>, all live on the internet.
             </motion.p>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }}
-              style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <motion.div className="flex flex-wrap gap-4 justify-center lg:justify-start" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }}>
               <Link to="/projects" className="btn-primary" id="home-cta-projects">View Projects →</Link>
               <a href="https://github.com/amritanshguptadev" target="_blank" rel="noopener noreferrer" className="btn-secondary" id="home-cta-github">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
@@ -354,7 +349,7 @@ const Home = () => {
       {/* ── Stats bar ── */}
       <motion.section initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1, duration: 0.7 }}
         style={{ position: "relative", zIndex: 1, borderTop: "1px solid var(--color-border)", background: "var(--color-card)", backdropFilter: "blur(10px)", padding: "2.25rem 0" }}>
-        <div className="section-wrapper" style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-around", gap: "2rem" }}>
+        <div className="section-wrapper grid grid-cols-2 md:grid-cols-4 gap-6 justify-items-center">
           {STATS.map((s, i) => (
             <motion.div key={s.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 + i * 0.08 }}
               style={{ textAlign: "center", minWidth: 100 }}>
@@ -384,8 +379,8 @@ const Home = () => {
               <motion.a key={p.name} href={p.url} target="_blank" rel="noopener noreferrer"
                 initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 whileHover={{ x: 12, scale: 1.01 }}
-                style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "1rem",
-                  padding: "1.5rem 2rem", borderRadius: 16, background: "var(--color-card)", border: "1px solid var(--color-border)", textDecoration: "none",
+                className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 sm:p-6 sm:px-8"
+                style={{ borderRadius: 16, background: "var(--color-card)", border: "1px solid var(--color-border)", textDecoration: "none",
                   transition: "border-color 0.25s ease, background 0.25s ease" }}
                 onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = "rgba(232,160,69,0.3)"; el.style.background = "rgba(232,160,69,0.04)"; }}
                 onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.borderColor = "var(--color-border)"; el.style.background = "var(--color-card)"; }}>
@@ -413,7 +408,7 @@ const Home = () => {
           ════════════════════════════════════════════════════ */}
       <section style={{ position: "relative", zIndex: 1, padding: "5rem 0" }}>
         <div className="section-wrapper">
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: "2rem", alignItems: "stretch" }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
 
             {/* Terminal card */}
             <motion.div ref={termRef} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
@@ -431,8 +426,8 @@ const Home = () => {
                   <span style={{ fontFamily: "'Courier New', monospace", fontSize: "0.72rem", color: "rgba(0,255,65,0.4)", marginLeft: "0.75rem" }}>amritansh@portfolio ~ bash</span>
                 </div>
                 {/* Terminal body */}
-                <div style={{ padding: "1.5rem 1.8rem", minHeight: 360 }}>
-                  <div style={{ fontFamily: "'Courier New', monospace", fontSize: "0.82rem", color: "rgba(0,255,65,0.6)", marginBottom: "0.5rem" }}>
+                <div style={{ padding: "1.25rem 1.5rem", minHeight: 360 }}>
+                  <div style={{ fontFamily: "'Courier New', monospace", fontSize: "clamp(0.72rem, 2.2vw, 0.82rem)", color: "rgba(0,255,65,0.6)", marginBottom: "0.5rem" }}>
                     $ cat amritansh.json
                   </div>
                   {termStarted && (
@@ -475,13 +470,13 @@ const Home = () => {
                 </div>
 
                 {/* Graduation countdown */}
-                <div style={{ borderRadius: 18, padding: "1.8rem", flex: 1,
+                <div className="flex-1 rounded-[18px] p-4 sm:p-6 lg:p-8" style={{
                   background: "linear-gradient(135deg, rgba(107,72,255,0.12) 0%, rgba(232,160,69,0.06) 100%)",
                   border: "1px solid rgba(107,72,255,0.22)" }}>
                   <p style={{ fontFamily: "var(--font-body)", fontSize: "0.7rem", color: "var(--color-accent-violet-light)", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, marginBottom: "0.5rem" }}>
                     ⏳ Graduating in
                   </p>
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0.75rem", marginBottom: "0.75rem" }}>
+                  <div className="grid grid-cols-4 gap-2 sm:gap-3 mb-3">
                     {[
                       { n: cd.days,  l: "Days"  },
                       { n: cd.hours, l: "Hours" },
@@ -559,7 +554,7 @@ const Home = () => {
             style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(1.8rem, 4vw, 3rem)", color: "var(--color-heading)", marginBottom: "3rem" }}>
             What I'm <span className="violet-text-gradient">Currently</span> Doing
           </motion.h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: "1rem" }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {CURRENTLY.map((item, i) => (
               <motion.div key={item.label}
                 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
@@ -602,12 +597,12 @@ const Home = () => {
           </motion.h2>
 
           {/* Bento grid — wide cards span 2 cols */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "1rem", gridAutoFlow: "dense" }}>
+          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 auto-rows-fr">
             {BENTO.map((item, i) => (
               <motion.div key={item.title}
                 initial={{ opacity: 0, scale: 0.92 }} whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }} transition={{ delay: i * 0.07 }}
-                style={{ gridColumn: item.wide ? "span 2" : "span 1" }}
+                className={item.wide ? "col-span-1 xs:col-span-2" : "col-span-1"}
                 whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}>
                 <div style={{
                   padding: "1.5rem", borderRadius: 16, height: "100%",
