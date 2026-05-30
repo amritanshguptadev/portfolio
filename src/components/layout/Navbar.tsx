@@ -248,7 +248,7 @@ const Navbar = () => {
         <nav
           id="desktop-nav"
           style={{ gap: "0.25rem" }}
-          className="hidden sm:flex"
+          className="nav-desktop"
         >
           {NAV_LINKS.map((link) => (
             <NavLink
@@ -292,7 +292,7 @@ const Navbar = () => {
             href="https://mail.google.com/mail/?view=cm&to=amritansh.gupta.dev@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex"
+            className="nav-cta-button"
             id="nav-cta"
             style={{
               padding:        "0.5rem 1.4rem",
@@ -312,7 +312,7 @@ const Navbar = () => {
           </a>
 
           {/* Hamburger — mobile only */}
-          <div className="sm:hidden">
+          <div className="nav-mobile-toggle">
             <Hamburger open={menuOpen} onClick={() => setMenuOpen((v) => !v)} />
           </div>
         </div>

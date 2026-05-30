@@ -239,9 +239,9 @@ const Home = () => {
         padding: "0 1.5rem",
         position: "relative", zIndex: 1,
       }}>
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20" style={{ maxWidth: 1200, width: "100%" }}>
+        <div className="hero-flex-container" style={{ maxWidth: 1200, width: "100%" }}>
           {/* Left text block */}
-          <div className="w-full lg:flex-1 text-center lg:text-left" style={{ maxWidth: 620 }}>
+          <div className="hero-text-block" style={{ maxWidth: 620 }}>
             <motion.div
               initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
               style={{
@@ -266,7 +266,7 @@ const Home = () => {
               Amritansh Gupta
             </motion.h1>
 
-            <motion.div className="justify-center lg:justify-start" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+            <motion.div className="hero-typewriter-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
               style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1rem, 2.4vw, 1.3rem)", color: "var(--color-body)", marginBottom: "1.4rem",
                 minHeight: "2.2em", display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <span style={{ color: "var(--color-accent-gold)", fontWeight: 700, fontSize: "1.2em", fontFamily: "var(--font-heading)" }}>›</span>
@@ -275,7 +275,7 @@ const Home = () => {
             </motion.div>
 
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }}
-              className="mx-auto lg:mx-0"
+              className="hero-paragraph"
               style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.8vw, 1.05rem)", color: "var(--color-body-muted)", maxWidth: 540, lineHeight: 1.85, marginBottom: "2.8rem" }}>
               CS student at Dev Sanskriti Vishwavidyalaya, Haridwar — building software
               that actually works and feels good to use. From{" "}
@@ -283,7 +283,7 @@ const Home = () => {
               <span style={{ color: "var(--color-inline-violet)", fontWeight: 500 }}>full-stack apps</span>, all live on the internet.
             </motion.p>
 
-            <motion.div className="flex flex-wrap gap-4 justify-center lg:justify-start" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }}>
+            <motion.div className="hero-buttons-container" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.65 }}>
               <Link to="/projects" className="btn-primary" id="home-cta-projects">View Projects →</Link>
               <a href="https://github.com/amritanshguptadev" target="_blank" rel="noopener noreferrer" className="btn-secondary" id="home-cta-github">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>

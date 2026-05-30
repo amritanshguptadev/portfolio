@@ -534,3 +534,92 @@ header, footer, nav, main, section,
 [data-theme="light"] .glass-card {
   border-color: var(--color-border);
 }
+
+/* ─── Robust Responsive Utility Classes ─── */
+
+/* 1. Navbar Navigation Layouts */
+.nav-desktop {
+  display: none !important;
+}
+.nav-mobile-toggle {
+  display: flex !important;
+}
+.nav-cta-button {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .nav-desktop {
+    display: flex !important;
+  }
+  .nav-mobile-toggle {
+    display: none !important;
+  }
+  .nav-cta-button {
+    display: inline-flex !important;
+  }
+}
+
+/* 2. Hero Section Layouts and Alignments */
+.hero-flex-container {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2.5rem !important;
+}
+
+.hero-text-block {
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.hero-typewriter-container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100% !important;
+}
+
+.hero-paragraph {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+
+.hero-buttons-container {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 1rem !important;
+  justify-content: center !important;
+  width: 100% !important;
+}
+
+@media (min-width: 1024px) {
+  .hero-flex-container {
+    flex-direction: row !important;
+    gap: clamp(2rem, 6vw, 5rem) !important;
+  }
+
+  .hero-text-block {
+    text-align: left !important;
+    align-items: flex-start !important;
+  }
+
+  .hero-typewriter-container {
+    justify-content: flex-start !important;
+  }
+
+  .hero-paragraph {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+  }
+
+  .hero-buttons-container {
+    justify-content: flex-start !important;
+  }
+}
+
