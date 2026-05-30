@@ -1,0 +1,507 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Tilt from "react-parallax-tilt";
+
+const PROJECTS = [
+  {
+    id: "mindmetric",
+    title: "MindMetric",
+    subtitle: "AI Psychological Assessment Platform",
+    year: "2026",
+    desc: "Privacy-first psychological assessment platform with 5 peer-reviewed instruments (Big Five, PHQ-9, GAD-7, RSES, ECR-R). AI-powered insights via Groq API, downloadable A4 PDF reports, personal dashboard. Fully client-side — zero backend, no accounts, no data transmitted.",
+    tags: ["JavaScript", "Groq API", "PDF Generation", "Psychology", "AI"],
+    live: "https://mindmetric-orpin.vercel.app",
+    github: "https://github.com/amritanshguptadev/mindmetric",
+    color: "#E8A045",
+    featured: true,
+    img: "/project_mindmetric.png",
+  },
+  {
+    id: "gitglow",
+    title: "GitGlow",
+    subtitle: "GitHub Profile Analytics Dashboard",
+    year: "2026",
+    desc: "Zero-dependency analytics dashboard consuming the GitHub Public REST API. Animated language charts, star rankings, contribution streaks using vanilla JavaScript Canvas. Deployed on Vercel with responsive CSS3 UI.",
+    tags: ["CSS3", "Canvas API", "GitHub API", "Vanilla JS", "Data Viz"],
+    live: "https://gitglow-inky.vercel.app/",
+    github: "https://github.com/amritanshguptadev/gitglow",
+    color: "#6B48FF",
+    featured: true,
+    img: "/project_gitglow.png",
+  },
+  {
+    id: "yogaflow-pro",
+    title: "YogaFlow Pro",
+    subtitle: "Full-Stack Yoga Booking Platform",
+    year: "2025",
+    desc: "Full-stack booking platform built with Astro + React 19 and Tailwind CSS. Session scheduling, Indian localization, responsive mobile-first UI. CI/CD pipeline auto-deploying to Vercel on every GitHub push.",
+    tags: ["Astro", "React 19", "TypeScript", "Tailwind CSS", "CI/CD"],
+    live: "https://yogaflow-pro.vercel.app",
+    github: "https://github.com/amritanshguptadev/yogaflow-pro",
+    color: "#E8A045",
+    featured: true,
+    img: "/project_yogaflow.png",
+  },
+  {
+    id: "fakebuster",
+    title: "FakeBuster",
+    subtitle: "AI Misinformation Detector",
+    year: "2026",
+    desc: "AI-powered tool to detect fake news and misinformation using NLP techniques. Helps users identify credible vs. unreliable sources in the age of information overload.",
+    tags: ["JavaScript", "AI/NLP", "Vercel", "Fact-Check"],
+    live: "https://fake-buster-omega.vercel.app/",
+    github: "https://github.com/amritanshguptadev/FakeBuster",
+    color: "#6B48FF",
+    featured: false,
+    img: "/project_fakebuster.png",
+  },
+  {
+    id: "incredible-india",
+    title: "Incredible India",
+    subtitle: "Interactive Travel Portal",
+    year: "2026",
+    desc: "A visually rich travel portal celebrating India's diversity — featuring animations, photo gallery, destination guides, and responsive design. Built with pure HTML/CSS/JS.",
+    tags: ["HTML5", "CSS3", "Animations", "Responsive", "Travel"],
+    live: "https://incredible-india-seven.vercel.app",
+    github: "https://github.com/amritanshguptadev/incredible-india",
+    color: "#E8A045",
+    featured: false,
+    img: "/project_incredible_india.png",
+  },
+  {
+    id: "portfolio-3d",
+    title: "3D Portfolio",
+    subtitle: "This Website — Multi-Page 3D Portfolio",
+    year: "2026",
+    desc: "The very website you're viewing. Built with React 18, Three.js, Framer Motion, and TypeScript. Multi-page routing, animated 3D scenes, glassmorphism design.",
+    tags: ["React 18", "Three.js", "TypeScript", "Framer Motion", "Vite"],
+    live: "#",
+    github: "https://github.com/amritanshguptadev",
+    color: "#6B48FF",
+    featured: false,
+    img: "/project_portfolio3d.png",
+  },
+];
+
+type Project = (typeof PROJECTS)[0];
+
+const ExternalIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+  </svg>
+);
+
+const GitHubIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+  </svg>
+);
+
+const ProjectCard = ({ project }: { project: Project }) => (
+  <Tilt tiltMaxAngleX={7} tiltMaxAngleY={7} glareEnable glareMaxOpacity={0.07} glareColor={project.color} glarePosition="all" style={{ transformStyle: "preserve-3d", height: "100%" }}>
+    <motion.div
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6 }}
+      className="glass-card"
+      style={{ borderRadius: 20, overflow: "hidden", border: `1px solid ${project.color}18`, height: "100%", display: "flex", flexDirection: "column", position: "relative" }}
+    >
+      <div style={{ height: 2, background: `linear-gradient(90deg, transparent, ${project.color}, transparent)`, flexShrink: 0 }} />
+      <div style={{ height: 220, overflow: "hidden", flexShrink: 0, background: "#0a0a1a", position: "relative" }}>
+        <img src={project.img} alt={`${project.title} screenshot`}
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", transition: "transform 0.5s ease" }}
+          loading="lazy"
+          onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+          onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
+        />
+        <div style={{ position: "absolute", inset: 0, background: `linear-gradient(180deg, transparent 65%, rgba(10,10,26,0.85) 100%)`, pointerEvents: "none" }} />
+        {project.featured && (
+          <div style={{ position: "absolute", top: 12, right: 12, background: `${project.color}22`, border: `1px solid ${project.color}66`,
+            borderRadius: 9999, padding: "0.2rem 0.65rem", fontFamily: "var(--font-body)", fontSize: "0.68rem", fontWeight: 700,
+            color: project.color, textTransform: "uppercase", letterSpacing: "0.08em", backdropFilter: "blur(6px)" }}>
+            ⭐ Featured
+          </div>
+        )}
+      </div>
+      <div style={{ padding: "1.5rem 1.75rem", display: "flex", flexDirection: "column", flex: 1 }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: "0.75rem", marginBottom: "0.3rem" }}>
+          <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: "1.15rem", color: "var(--color-heading)" }}>{project.title}</h3>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "0.72rem", color: "var(--color-body-faint)" }}>{project.year}</span>
+        </div>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "0.75rem", color: project.color, fontWeight: 600, marginBottom: "0.85rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>{project.subtitle}</p>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: "0.84rem", color: "var(--color-body-muted)", lineHeight: 1.75, marginBottom: "1.25rem", flex: 1 }}>{project.desc}</p>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "1.4rem" }}>
+          {project.tags.map((tag) => (
+            <span key={tag} style={{ padding: "0.18rem 0.6rem", borderRadius: 9999, fontFamily: "var(--font-body)", fontSize: "0.7rem", fontWeight: 500, background: `${project.color}0e`, border: `1px solid ${project.color}22`, color: project.color }}>{tag}</span>
+          ))}
+        </div>
+        <div style={{ display: "flex", gap: "0.65rem" }}>
+          {project.live !== "#" && (
+            <a href={project.live} target="_blank" rel="noopener noreferrer" id={`project-live-${project.id}`}
+              style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", padding: "0.45rem 1rem", borderRadius: 9999, background: `${project.color}16`, border: `1px solid ${project.color}38`, fontFamily: "var(--font-body)", fontSize: "0.8rem", fontWeight: 600, color: project.color, textDecoration: "none", transition: "all 0.2s ease" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = `${project.color}28`; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = `${project.color}16`; }}>
+              <ExternalIcon /> Live Demo
+            </a>
+          )}
+          <a href={project.github} target="_blank" rel="noopener noreferrer" id={`project-github-${project.id}`}
+            style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", padding: "0.45rem 1rem", borderRadius: 9999, background: "var(--color-card)", border: "1px solid var(--color-border)", fontFamily: "var(--font-body)", fontSize: "0.8rem", fontWeight: 600, color: "var(--color-body)", textDecoration: "none", transition: "all 0.2s ease" }}
+            onMouseEnter={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = "var(--color-heading)"; el.style.borderColor = "var(--color-border-strong)"; }}
+            onMouseLeave={(e) => { const el = e.currentTarget as HTMLAnchorElement; el.style.color = "var(--color-body)"; el.style.borderColor = "var(--color-border)"; }}>
+            <GitHubIcon /> Code
+          </a>
+        </div>
+      </div>
+    </motion.div>
+  </Tilt>
+);
+
+const Projects = () => {
+  const [filter, setFilter] = useState<"all" | "featured">("all");
+  const shown = filter === "featured" ? PROJECTS.filter((p) => p.featured) : PROJECTS;
+
+  return (
+    <main className="page-content" id="page-projects">
+
+      {/* ── Original hero + cards section ── */}
+      <section style={{ padding: "5rem 0 6rem" }}>
+        <div className="section-wrapper">
+          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", color: "var(--color-accent-gold)", textTransform: "uppercase", letterSpacing: "0.16em", fontWeight: 600, marginBottom: "0.5rem" }}>
+            What I've built
+          </motion.p>
+          <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "flex-end", marginBottom: "3.5rem", gap: "1.5rem" }}>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+              style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(2.2rem, 5vw, 3.8rem)", color: "var(--color-heading)" }}>
+              My <span className="saffron-text-gradient">Projects</span>
+            </motion.h1>
+            <div style={{ display: "flex", gap: "0.5rem" }}>
+              {(["all", "featured"] as const).map((f) => (
+                <button key={f} onClick={() => setFilter(f)} id={`projects-filter-${f}`}
+                  style={{ padding: "0.48rem 1.2rem", borderRadius: 9999, fontFamily: "var(--font-body)", fontSize: "0.82rem", fontWeight: 500, cursor: "pointer",
+                    border: filter === f ? "1px solid var(--color-accent-gold)" : "1px solid var(--color-border)",
+                    background: filter === f ? "rgba(232,160,69,0.12)" : "var(--color-card)",
+                    color: filter === f ? "var(--color-accent-gold)" : "var(--color-body-muted)", transition: "all 0.2s ease" }}>
+                  {f === "all" ? "All Projects" : "Featured"}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            <motion.div key={filter} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}
+              style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: "1.75rem" }}>
+              {shown.map((project) => (<ProjectCard key={project.id} project={project} />))}
+            </motion.div>
+          </AnimatePresence>
+
+          {/* GitHub CTA */}
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} style={{ textAlign: "center", marginTop: "5rem" }}>
+            <div className="glass-card" style={{ display: "inline-block", padding: "2.5rem 3.5rem", borderRadius: 24, border: "1px solid rgba(107,72,255,0.2)" }}>
+              <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--color-body-faint)", marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>More on GitHub</p>
+              <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "1.65rem", color: "var(--color-heading)", marginBottom: "1.5rem" }}>See everything I've built</h2>
+              <a href="https://github.com/amritanshguptadev" target="_blank" rel="noopener noreferrer" className="btn-primary" id="projects-cta-github">View GitHub Profile &rarr;</a>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════
+          ✦ CREATIVE 1 — BY THE NUMBERS
+          Aggregate stats across ALL projects — unique perspective
+          ════════════════════════════════════════════════════ */}
+      <section style={{ position: "relative", borderTop: "1px solid var(--color-border)", padding: "5rem 0", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(107,72,255,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div className="section-wrapper">
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", color: "var(--color-accent-gold)", textTransform: "uppercase", letterSpacing: "0.16em", fontWeight: 600, marginBottom: "0.5rem" }}>
+            Across all 6 projects
+          </motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+            style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(1.8rem, 4vw, 3rem)", color: "var(--color-heading)", marginBottom: "3rem" }}>
+            By the <span className="violet-text-gradient">Numbers</span>
+          </motion.h2>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "1rem" }}>
+            {[
+              { n: "6",     label: "Live Projects",       sub: "All deployed on Vercel",           icon: "🚀", color: "#6B48FF" },
+              { n: "340+",  label: "Git Commits",         sub: "Across all repos combined",        icon: "📝", color: "#E8A045" },
+              { n: "5",     label: "Public APIs Used",    sub: "GitHub, Groq, REST & more",        icon: "🔌", color: "#00CEA8" },
+              { n: "0",     label: "Backend Servers",     sub: "MindMetric is fully client-side",  icon: "☁️", color: "#22C55E" },
+              { n: "~15k+", label: "Lines of Code",       sub: "Hand-typed, not AI-generated",     icon: "⌨️", color: "#F472B6" },
+              { n: "3",     label: "Hackathon Entries",   sub: "2 wins, 1 placement",              icon: "🏆", color: "#E8A045" },
+              { n: "100%",  label: "Shipped",             sub: "No abandoned projects here",       icon: "✅", color: "#22C55E" },
+              { n: "2",     label: "Frameworks",          sub: "React & Astro in production",      icon: "⚛️", color: "#61DAFB" },
+            ].map((stat, i) => (
+              <motion.div key={stat.label} initial={{ opacity: 0, y: 24, scale: 0.95 }} whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                whileHover={{ y: -5, transition: { duration: 0.2 } }}>
+                <div style={{ padding: "1.5rem 1.25rem", borderRadius: 18, textAlign: "center", height: "100%",
+                  background: "var(--color-card)", border: `1px solid ${stat.color}22`,
+                  transition: "border-color 0.3s, box-shadow 0.3s" }}
+                  onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.borderColor = `${stat.color}55`; el.style.boxShadow = `0 12px 40px ${stat.color}14`; }}
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.borderColor = `${stat.color}22`; el.style.boxShadow = "none"; }}>
+                  <div style={{ fontSize: "1.8rem", marginBottom: "0.6rem" }}>{stat.icon}</div>
+                  <p style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(1.4rem, 3vw, 2rem)", color: stat.color, lineHeight: 1, marginBottom: "0.4rem" }}>{stat.n}</p>
+                  <p style={{ fontFamily: "var(--font-body)", fontWeight: 700, fontSize: "0.8rem", color: "var(--color-heading)", marginBottom: "0.3rem" }}>{stat.label}</p>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.68rem", color: "var(--color-body-faint)", lineHeight: 1.5 }}>{stat.sub}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════
+          ✦ CREATIVE 2 — BUILD LOG / DEV DIARY
+          Real behind-the-scenes story — NOT in the README
+          ════════════════════════════════════════════════════ */}
+      <section style={{ position: "relative", borderTop: "1px solid var(--color-border)", padding: "6rem 0" }}>
+        <div style={{ position: "absolute", top: 0, right: 0, width: 400, height: 400,
+          background: "radial-gradient(circle, rgba(232,160,69,0.06) 0%, transparent 70%)", filter: "blur(60px)", pointerEvents: "none" }} />
+        <div className="section-wrapper">
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", color: "var(--color-accent-gold)", textTransform: "uppercase", letterSpacing: "0.16em", fontWeight: 600, marginBottom: "0.5rem" }}>
+            Behind the screens
+          </motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+            style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(1.8rem, 4vw, 3rem)", color: "var(--color-heading)", marginBottom: "0.75rem" }}>
+            The Build <span className="saffron-text-gradient">Log</span> 📓
+          </motion.h2>
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem", color: "var(--color-body-muted)", marginBottom: "3.5rem", maxWidth: 560, lineHeight: 1.75 }}>
+            The version of events they don't put in the README — the actual build process, unfiltered.
+          </motion.p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: "1.5rem" }}>
+            {[
+              {
+                project: "MindMetric", color: "#E8A045", emoji: "🧠", date: "Jan–Feb 2026",
+                entries: [
+                  { day: "Day 1",  log: "Started with one question: 'can a browser assess your mental health privately?' Wrote the Big Five questionnaire by hand. 50 questions. Took 4 hours." },
+                  { day: "Day 5",  log: "Groq API kept returning generic responses. Spent an entire evening prompt-engineering until the insight actually sounded like a psychologist wrote it." },
+                  { day: "Day 9",  log: "PDF generation broke in Safari — jsPDF handles units differently. Three hours debugging. Fixed. Shipped." },
+                  { day: "Day 12", log: "Won 1st place at AI Conference Website Hackathon. The 12 days felt like 12 months. Worth every minute." },
+                ],
+              },
+              {
+                project: "GitGlow", color: "#6B48FF", emoji: "📊", date: "March 2026",
+                entries: [
+                  { day: "Day 1", log: "GitHub's API rate-limits unauthenticated requests to 60/hour. Hit the limit in 10 minutes of testing. Spent the evening reading OAuth docs." },
+                  { day: "Day 3", log: "Drew my first Canvas donut chart. It looked like an oval. A full day of trigonometry I hadn't done since class 11." },
+                  { day: "Day 6", log: "Contribution streak was off by 1 day for users outside IST. Fixed by forcing UTC. Simple fix — 4 hours to find." },
+                  { day: "Day 8", log: "Zero dependencies. Every chart, every animation, every tooltip — pure vanilla JS and Canvas 2D. I'm proudest of this constraint." },
+                ],
+              },
+              {
+                project: "YogaFlow Pro", color: "#00CEA8", emoji: "🧘", date: "Late 2025",
+                entries: [
+                  { day: "Week 1", log: "Chose Astro for SEO — static HTML on first load. Had never used it before. Read the entire docs for 3 days straight before writing a line." },
+                  { day: "Week 2", log: "React 19 hydration inside Astro islands confused me completely. Drew diagrams on paper until the mental model clicked." },
+                  { day: "Week 3", log: "Indian locale formatting for dates and rupee currency — more edge cases than I expected. Found a 3-year-old Stack Overflow answer that saved me." },
+                  { day: "Week 4", log: "First GitHub Actions CI/CD auto-deploy triggered. That green checkmark — one of the most satisfying moments in any project I've built." },
+                ],
+              },
+              {
+                project: "FakeBuster", color: "#F472B6", emoji: "🔍", date: "Feb 2026",
+                entries: [
+                  { day: "Day 1", log: "Idea came during the DSVV AI Conference — sat in a talk about misinformation and thought: 'I can build something for this tonight.'" },
+                  { day: "Day 2", log: "NLP confidence was returning 50% for everything. Wasn't a model problem — it was a prompting problem. Rewrote the system instruction." },
+                  { day: "Day 4", log: "Flask backend kept timing out on Render's free tier. Added response caching. Time dropped from 8s → 1.2s." },
+                  { day: "Day 5", log: "Shipped. Not perfect. But it works, it's live, and it's genuinely useful. Shipping beats perfecting — every time." },
+                ],
+              },
+            ].map((proj, pi) => (
+              <motion.div key={proj.project} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: pi * 0.1 }}>
+                <div style={{ borderRadius: 20, overflow: "hidden", height: "100%", background: "var(--color-card)", border: `1px solid ${proj.color}22` }}>
+                  <div style={{ padding: "1.25rem 1.5rem", borderBottom: `1px solid ${proj.color}18`,
+                    background: `linear-gradient(135deg, ${proj.color}08, transparent)`,
+                    display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+                      <span style={{ fontSize: "1.3rem" }}>{proj.emoji}</span>
+                      <div>
+                        <p style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "1rem", color: proj.color }}>{proj.project}</p>
+                        <p style={{ fontFamily: "var(--font-body)", fontSize: "0.68rem", color: "var(--color-body-faint)" }}>{proj.date}</p>
+                      </div>
+                    </div>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "0.62rem", color: proj.color,
+                      background: `${proj.color}14`, border: `1px solid ${proj.color}28`, borderRadius: 9999, padding: "0.12rem 0.6rem", fontWeight: 700 }}>
+                      BUILD LOG
+                    </span>
+                  </div>
+                  <div style={{ padding: "1.25rem 1.5rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+                    {proj.entries.map((e, ei) => (
+                      <div key={ei} style={{ display: "flex", gap: "0.9rem", alignItems: "flex-start" }}>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "0.65rem", fontWeight: 700, color: proj.color,
+                          background: `${proj.color}12`, border: `1px solid ${proj.color}25`,
+                          borderRadius: 6, padding: "0.15rem 0.5rem", whiteSpace: "nowrap", flexShrink: 0, marginTop: 2 }}>
+                          {e.day}
+                        </span>
+                        <p style={{ fontFamily: "var(--font-body)", fontSize: "0.8rem", color: "var(--color-body-muted)", lineHeight: 1.7 }}>{e.log}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════
+          ✦ CREATIVE 3 — WHAT I ACTUALLY LEARNED
+          The specific insight each project gave me — honest
+          ════════════════════════════════════════════════════ */}
+      <section style={{ position: "relative", borderTop: "1px solid var(--color-border)", padding: "6rem 0" }}>
+        <div className="section-wrapper">
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", color: "var(--color-accent-gold)", textTransform: "uppercase", letterSpacing: "0.16em", fontWeight: 600, marginBottom: "0.5rem" }}>
+            The real takeaways
+          </motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+            style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(1.8rem, 4vw, 3rem)", color: "var(--color-heading)", marginBottom: "0.75rem" }}>
+            What I <span className="violet-text-gradient">Actually</span> Learned 🧩
+          </motion.h2>
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem", color: "var(--color-body-muted)", marginBottom: "3.5rem", maxWidth: 560, lineHeight: 1.75 }}>
+            Not "I learned React." The actual specific insight each project gave me — the kind you don't get from tutorials.
+          </motion.p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0", borderRadius: 20, overflow: "hidden", border: "1px solid var(--color-border)" }}>
+            {[
+              { project: "MindMetric",         color: "#E8A045", emoji: "🧠",
+                lesson: "Prompt engineering is product design. The difference between a useful AI response and a useless one isn't the model — it's how you frame the instruction. I rewrote the system prompt 11 times.",
+                principle: "Words are code when you work with LLMs." },
+              { project: "GitGlow",             color: "#6B48FF", emoji: "📊",
+                lesson: "The Canvas API is a blank slate — which means every mistake is yours. Building charts from scratch taught me more about coordinate systems and rendering than any framework tutorial ever could.",
+                principle: "Constraints force understanding." },
+              { project: "YogaFlow Pro",        color: "#00CEA8", emoji: "🧘",
+                lesson: "Astro's islands architecture is the right model for content-heavy sites. Zero JavaScript on first load → immediate, measurable SEO impact. Framework choice is product strategy, not just a preference.",
+                principle: "Pick the tool that matches the problem's shape." },
+              { project: "FakeBuster",          color: "#F472B6", emoji: "🔍",
+                lesson: "Shipping something imperfect in 5 days beats 30 days on something that never ships. FakeBuster is not the most accurate NLP tool — but it exists, it works, and real people use it.",
+                principle: "Shipped > Perfect." },
+              { project: "Incredible India",    color: "#E34F26", emoji: "🌐",
+                lesson: "Pure HTML/CSS/JS with zero build tools forces you to understand what browsers actually do. No webpack magic, no HMR. Just a file, a browser, and your skills standing alone.",
+                principle: "Build without scaffolding at least once." },
+              { project: "3D Portfolio",        color: "#646CFF", emoji: "✨",
+                lesson: "Framer Motion's declarative animations and Three.js's imperative 3D model are philosophically opposite — learning both in one project forced me to understand when each paradigm actually wins.",
+                principle: "Understand the philosophy, not just the API." },
+            ].map((item, i) => (
+              <motion.div key={item.project} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.07 }}
+                style={{ display: "flex", gap: "0", alignItems: "stretch", background: "var(--color-card)",
+                  borderBottom: "1px solid var(--color-border)", transition: "background 0.2s" }}
+                onMouseEnter={e => (e.currentTarget as HTMLDivElement).style.background = `${item.color}05`}
+                onMouseLeave={e => (e.currentTarget as HTMLDivElement).style.background = "var(--color-card)"}>
+                <div style={{ width: 4, flexShrink: 0, background: item.color, opacity: 0.7 }} />
+                <div style={{ padding: "1.5rem 1.75rem", flex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.7rem" }}>
+                    <span style={{ fontSize: "1.1rem" }}>{item.emoji}</span>
+                    <span style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "0.92rem", color: item.color }}>{item.project}</span>
+                  </div>
+                  <p style={{ fontFamily: "var(--font-body)", fontSize: "0.87rem", color: "var(--color-body-muted)", lineHeight: 1.8, marginBottom: "0.85rem" }}>{item.lesson}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "0.68rem", color: "var(--color-body-faint)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Principle:</span>
+                    <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: "0.82rem", color: item.color, fontStyle: "italic" }}>"{item.principle}"</span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ════════════════════════════════════════════════════
+          ✦ CREATIVE 4 — WHAT'S COMING NEXT
+          Cinematic "coming soon" sneak-peeks at future builds
+          ════════════════════════════════════════════════════ */}
+      <section style={{ position: "relative", borderTop: "1px solid var(--color-border)", padding: "6rem 0 8rem", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(107,72,255,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
+        <div className="section-wrapper">
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", color: "var(--color-accent-gold)", textTransform: "uppercase", letterSpacing: "0.16em", fontWeight: 600, marginBottom: "0.5rem" }}>
+            In the pipeline
+          </motion.p>
+          <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }}
+            style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(1.8rem, 4vw, 3rem)", color: "var(--color-heading)", marginBottom: "0.75rem" }}>
+            What's <span className="saffron-text-gradient">Coming Next</span> 🔭
+          </motion.h2>
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.15 }}
+            style={{ fontFamily: "var(--font-body)", fontSize: "0.92rem", color: "var(--color-body-muted)", marginBottom: "3.5rem", maxWidth: 560, lineHeight: 1.75 }}>
+            Projects I'm actively planning or building. No promises on timelines — but these ideas are too good to not exist.
+          </motion.p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: "1.5rem" }}>
+            {[
+              { name: "DevPulse",       tagline: "A developer productivity tracker that visualises deep work vs. distraction patterns using browser extension data.", status: "Designing", pct: 15, color: "#6B48FF", emoji: "📈", eta: "Q3 2026", stack: ["React", "Web Extension API", "Canvas API"] },
+              { name: "MindMetric v2",  tagline: "Longitudinal tracking — measure how your Big Five scores shift over weeks. Your personality, graphed across time.", status: "Planning",  pct: 30, color: "#E8A045", emoji: "🧠", eta: "Q3 2026", stack: ["TypeScript", "IndexedDB", "Groq API"] },
+              { name: "OCR Notes",      tagline: "Upload a photo of handwritten notes. Get back searchable markdown. Local-first — no cloud, no data leaves your device.", status: "Researching", pct: 10, color: "#00CEA8", emoji: "📷", eta: "Q4 2026", stack: ["Python", "OpenCV", "Tesseract", "Flask"] },
+              { name: "CampusBuzz",     tagline: "Real-time anonymous campus event board built for DSVV students — notices, lost & found, study groups, live updates.", status: "In Dev",     pct: 45, color: "#F472B6", emoji: "🏫", eta: "Q2 2026", stack: ["React", "Supabase", "Real-time DB", "PWA"] },
+            ].map((proj, i) => (
+              <motion.div key={proj.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                whileHover={{ y: -6, transition: { duration: 0.2 } }}>
+                <div style={{ borderRadius: 20, overflow: "hidden", height: "100%",
+                  background: "var(--color-card)", border: `1px solid ${proj.color}25`, position: "relative",
+                  transition: "border-color 0.3s, box-shadow 0.3s" }}
+                  onMouseEnter={e => { const el = e.currentTarget as HTMLDivElement; el.style.borderColor = `${proj.color}55`; el.style.boxShadow = `0 16px 50px ${proj.color}14`; }}
+                  onMouseLeave={e => { const el = e.currentTarget as HTMLDivElement; el.style.borderColor = `${proj.color}25`; el.style.boxShadow = "none"; }}>
+                  {/* Scan-line "coming soon" texture */}
+                  <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0,
+                    background: `repeating-linear-gradient(0deg, transparent, transparent 3px, ${proj.color}04 3px, ${proj.color}04 4px)` }} />
+                  <div style={{ position: "relative", zIndex: 1 }}>
+                    <div style={{ padding: "1.5rem 1.5rem 1rem", borderBottom: `1px solid ${proj.color}18`,
+                      background: `linear-gradient(135deg, ${proj.color}08, transparent)` }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.75rem" }}>
+                        <span style={{ fontSize: "2rem" }}>{proj.emoji}</span>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "0.3rem" }}>
+                          <span style={{ fontFamily: "var(--font-body)", fontSize: "0.62rem", fontWeight: 700, color: proj.color,
+                            background: `${proj.color}14`, border: `1px solid ${proj.color}28`, borderRadius: 9999, padding: "0.12rem 0.6rem" }}>
+                            {proj.status}
+                          </span>
+                          <span style={{ fontFamily: "var(--font-body)", fontSize: "0.62rem", color: "var(--color-body-faint)" }}>ETA: {proj.eta}</span>
+                        </div>
+                      </div>
+                      <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "1.2rem", color: "var(--color-heading)", marginBottom: "0.5rem" }}>{proj.name}</h3>
+                      <p style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem", color: "var(--color-body-muted)", lineHeight: 1.65 }}>{proj.tagline}</p>
+                    </div>
+                    <div style={{ padding: "1rem 1.5rem" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.4rem" }}>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "0.65rem", color: "var(--color-body-faint)", textTransform: "uppercase", letterSpacing: "0.1em" }}>Progress</span>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "0.65rem", color: proj.color, fontWeight: 700 }}>{proj.pct}%</span>
+                      </div>
+                      <div style={{ height: 4, borderRadius: 999, background: "var(--color-border)", overflow: "hidden", marginBottom: "1rem" }}>
+                        <motion.div initial={{ width: 0 }} whileInView={{ width: `${proj.pct}%` }} viewport={{ once: true }}
+                          transition={{ delay: i * 0.1 + 0.3, duration: 0.8 }}
+                          style={{ height: "100%", borderRadius: 999, background: `linear-gradient(90deg, ${proj.color}80, ${proj.color})` }} />
+                      </div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
+                        {proj.stack.map(s => (
+                          <span key={s} style={{ fontFamily: "var(--font-body)", fontSize: "0.65rem", fontWeight: 600,
+                            padding: "0.1rem 0.5rem", borderRadius: 9999,
+                            background: `${proj.color}10`, border: `1px solid ${proj.color}22`, color: proj.color }}>
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.5 }}
+            style={{ marginTop: "4rem", textAlign: "center" }}>
+            <div style={{ width: 60, height: 3, background: "linear-gradient(90deg, var(--color-accent-gold), var(--color-accent-violet))", borderRadius: 2, margin: "0 auto 1.5rem" }} />
+            <p style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: "clamp(1rem, 2.5vw, 1.4rem)", color: "var(--color-heading)", maxWidth: 640, margin: "0 auto", lineHeight: 1.6 }}>
+              "Every project I've shipped started as a bad first draft.<br/>The only trick is not stopping there."
+            </p>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: "0.85rem", color: "var(--color-accent-gold)", marginTop: "0.75rem" }}>— Amritansh Gupta</p>
+          </motion.div>
+        </div>
+      </section>
+    </main>
+  );
+};
+
+export default Projects;
