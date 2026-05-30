@@ -479,7 +479,7 @@ const Journey = () => {
   return (
     <main className="page-content" id="page-journey">
       {/* Background glows */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "5%", right: 0, width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, var(--color-orb-violet) 0%, transparent 70%)", filter: "blur(80px)" }} />
         <div style={{ position: "absolute", bottom: "20%", left: 0, width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(232,160,69,0.08) 0%, transparent 70%)", filter: "blur(80px)" }} />
       </div>

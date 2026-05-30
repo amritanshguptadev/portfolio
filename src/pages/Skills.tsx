@@ -330,7 +330,7 @@ const Skills = () => {
     <main className="page-content" id="page-skills">
 
       {/* Background glows */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
         <div style={{
           position: "absolute", top: "15%", right: 0,
           width: 500, height: 500, borderRadius: "50%",

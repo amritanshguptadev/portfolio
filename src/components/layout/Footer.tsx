@@ -240,8 +240,7 @@ const Footer = () => {
             &copy; {year} Amritansh Gupta &mdash; All rights reserved.
           </p>
           <p style={{ fontFamily: "var(--font-body)", fontSize: "0.78rem", color: "var(--color-body-faint)" }}>
-            Designed &amp; Developed by{" "}
-            <span style={{ color: "var(--color-accent-gold)", fontWeight: 600 }}>Amritansh Gupta</span>
+            Made by vive coding
           </p>
         </div>
       </div>

@@ -80,7 +80,7 @@ const PersonalityRadar = () => {
           {/* SVG Radar */}
           <motion.div initial={{ opacity: 0, scale: 0.85 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.7 }}
             style={{ flexShrink: 0 }}>
-            <svg viewBox="0 0 400 400" width={360} height={360} style={{ overflow: "visible" }}>
+            <svg viewBox="0 0 400 400" width={360} height={360} style={{ overflow: "visible", maxWidth: "100%", height: "auto" }}>
               {/* Grid rings */}
               {rings.map((r, ri) => (
                 <polygon key={ri}

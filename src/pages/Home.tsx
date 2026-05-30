@@ -212,7 +212,7 @@ const Home = () => {
     <main className="page-content" id="page-home" style={{ overflow: "hidden" }}>
 
       {/* ── Background orbs ── */}
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0 }}>
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
         <div style={{
           position: "absolute", top: "8%", left: "2%",
           width: 520, height: 520, borderRadius: "50%",
