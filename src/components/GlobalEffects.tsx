@@ -26,6 +26,12 @@ export const CustomCursor = () => {
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [hidden,  setHidden]  = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    setIsTouchDevice(isTouch);
+  }, []);
 
   const tick = useCallback(() => {
     // Smooth ring lag — lerp toward dot position
@@ -81,7 +87,7 @@ export const CustomCursor = () => {
     };
   }, [tick]);
 
-  if (typeof window === "undefined") return null;
+  if (typeof window === "undefined" || isTouchDevice) return null;
 
   const dotSize   = hovered ? 6 : 8;
   const ringSize  = hovered ? 44 : 32;
@@ -236,7 +242,7 @@ export const FloatingShapes = () => {
   ] as const;
 
   return (
-    <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
+    <div className="floating-shapes-container" style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0, overflow: "hidden" }}>
       {shapes.map((s, i) => {
         const stylePos: React.CSSProperties = {
           position: "absolute",
@@ -310,6 +316,11 @@ export const FloatingShapes = () => {
       })}
 
       <style>{`
+        @media (max-width: 768px) {
+          .floating-shapes-container {
+            display: none !important;
+          }
+        }
         @keyframes float3d-0 {
           0%,100% { transform: translateY(0px) rotateX(0deg) rotateZ(0deg); }
           33%      { transform: translateY(-18px) rotateX(120deg) rotateZ(60deg); }

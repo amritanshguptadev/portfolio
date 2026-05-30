@@ -318,32 +318,32 @@ const Home = () => {
               background: "conic-gradient(from 0deg, var(--color-accent-gold), var(--color-accent-violet), var(--color-accent-gold), var(--color-accent-violet), var(--color-accent-gold))",
               animation: "spinSlow 8s linear infinite", zIndex: 0 }} />
             <div style={{ position: "absolute", inset: -1, borderRadius: "50%", background: "var(--color-bg)", zIndex: 1 }} />
-            <div style={{ position: "relative", zIndex: 2, width: 340, height: 340, borderRadius: "50%", overflow: "hidden", background: "var(--color-photo-bg)" }}>
+            <div className="relative z-[2] w-[270px] h-[270px] xs:w-[300px] xs:h-[300px] sm:w-[340px] sm:h-[340px] rounded-full overflow-hidden" style={{ background: "var(--color-photo-bg)" }}>
               <img src="/src/assets/amritansh.png" alt="Amritansh Gupta — CS Student & Developer"
                 style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
                 onError={(e) => { (e.target as HTMLImageElement).src = "https://avatars.githubusercontent.com/u/269774892?v=4"; }} />
             </div>
-            <motion.div animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3.5 }}
+            <motion.div className="hidden lg:flex" animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3.5 }}
               style={{ position: "absolute", top: 20, left: -80, zIndex: 3, background: "var(--color-nav-bg-mobile)", backdropFilter: "blur(12px)",
                 border: "1px solid var(--color-border-accent)", borderRadius: 12, padding: "0.55rem 1rem",
                 fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 600, color: "var(--color-accent-violet-light)",
-                whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                whiteSpace: "nowrap", alignItems: "center", gap: "0.45rem" }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Haridwar, India
             </motion.div>
-            <motion.div animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 4, delay: 0.7 }}
+            <motion.div className="hidden lg:flex" animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 4, delay: 0.7 }}
               style={{ position: "absolute", bottom: 20, right: -95, zIndex: 3, background: "var(--color-nav-bg-mobile)", backdropFilter: "blur(12px)",
                 border: "1px solid rgba(232,160,69,0.4)", borderRadius: 12, padding: "0.55rem 1rem",
                 fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 600, color: "var(--color-accent-gold)",
-                whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                whiteSpace: "nowrap", alignItems: "center", gap: "0.45rem" }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-accent-gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               1st Place — AI Film Fest
             </motion.div>
-            <motion.div animate={{ y: [0, -7, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 1.2 }}
+            <motion.div className="hidden lg:flex" animate={{ y: [0, -7, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 1.2 }}
               style={{ position: "absolute", bottom: -10, left: -50, zIndex: 3, background: "var(--color-nav-bg-mobile)", backdropFilter: "blur(12px)",
                 border: "1px solid rgba(107,72,255,0.35)", borderRadius: 12, padding: "0.55rem 1rem",
                 fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 600, color: "var(--color-accent-violet-light)",
-                whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                whiteSpace: "nowrap", alignItems: "center", gap: "0.45rem" }}>
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent-violet-light)" strokeWidth="2.5" strokeLinecap="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
               CGPA — 8.26
             </motion.div>

@@ -247,7 +247,7 @@ const Navbar = () => {
         {/* ── Desktop Nav (hidden on mobile) ── */}
         <nav
           id="desktop-nav"
-          style={{ display: "flex", gap: "0.25rem" }}
+          style={{ gap: "0.25rem" }}
           className="hidden sm:flex"
         >
           {NAV_LINKS.map((link) => (
