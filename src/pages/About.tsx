@@ -265,7 +265,7 @@ const About = () => (
             transition={{ delay: 0.2, duration: 0.8, type: "spring" }}
             style={{ flex: "0 0 auto", position: "relative" }}
           >
-            <div style={{ position: "relative", width: 300 }}>
+            <div style={{ position: "relative", width: "100%", maxWidth: 300 }}>
               {/* Outer glow frame */}
               <div style={{
                 position: "absolute", inset: -2,
@@ -275,7 +275,7 @@ const About = () => (
               }} />
               <div style={{
                 position: "relative", zIndex: 1,
-                width: 300, height: 380,
+                width: "100%", aspectRatio: "300 / 380",
                 borderRadius: 26,
                 overflow: "hidden",
                 background: "var(--color-photo-bg)",
@@ -312,7 +312,7 @@ const About = () => (
           </motion.div>
 
           {/* Bio */}
-          <div style={{ flex: "1 1 360px", paddingTop: "0.5rem" }}>
+          <div style={{ flex: "1 1 280px", paddingTop: "0.5rem" }}>
             {[
               "I'm Amritansh Gupta, a Computer Science student from Haridwar, Uttarakhand, who genuinely enjoys solving problems and turning ideas into things that actually work.",
               "I care about building software that feels good to use — not just software that runs. I learn fast, take ownership of what I build, and I'm just as comfortable figuring something out on my own as I am collaborating with a team.",
@@ -558,8 +558,8 @@ const About = () => (
                 transition={{ delay: i * 0.07 }}
                 style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.6rem", position: "relative" }}>
 
-                {/* Left side — shown on "above" items */}
-                <div style={{ flex: 1, textAlign: "right", paddingRight: "1.5rem", opacity: item.above ? 1 : 0, pointerEvents: item.above ? "auto" : "none" }}>
+                {/* Left side — shown on "above" items on desktop, hidden on mobile */}
+                <div className="hidden sm:block" style={{ flex: 1, textAlign: "right", paddingRight: "1.5rem", opacity: item.above ? 1 : 0, pointerEvents: item.above ? "auto" : "none" }}>
                   <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-end",
                     padding: "0.7rem 1.1rem", borderRadius: 14, background: "var(--color-card)",
                     border: `1px solid ${item.color}28`, maxWidth: 220 }}>
@@ -569,11 +569,21 @@ const About = () => (
                 </div>
 
                 {/* Center dot */}
-                <div style={{ flexShrink: 0, width: 12, height: 12, borderRadius: "50%", background: item.color, boxShadow: `0 0 10px ${item.color}88`, zIndex: 1 }} />
+                <div className="sm:mx-0 mr-4 sm:flex-shrink-0" style={{ width: 12, height: 12, borderRadius: "50%", background: item.color, boxShadow: `0 0 10px ${item.color}88`, zIndex: 1 }} />
 
-                {/* Right side — shown on "below" items */}
-                <div style={{ flex: 1, paddingLeft: "1.5rem", opacity: item.above ? 0 : 1, pointerEvents: item.above ? "none" : "auto" }}>
-                  <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "flex-start",
+                {/* Right side — shown on "below" items on desktop, always shown on mobile */}
+                <div className="flex-1 pl-0 sm:pl-6" style={{ opacity: 1, pointerEvents: "auto" }}>
+                  {/* On mobile, we render this card regardless of item.above */}
+                  <div className="flex sm:hidden flex-col items-start" style={{
+                    padding: "0.7rem 1.1rem", borderRadius: 14, background: "var(--color-card)",
+                    border: `1px solid ${item.color}28`, maxWidth: "100%" }}>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "0.65rem", color: item.color, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.2rem" }}>{item.time}</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "0.82rem", color: "var(--color-body-muted)" }}>{item.icon} {item.label}</span>
+                  </div>
+
+                  {/* On desktop, we only show this card if item.above is false */}
+                  <div className="hidden sm:inline-flex sm:flex-col sm:items-start" style={{
+                    opacity: item.above ? 0 : 1, pointerEvents: item.above ? "none" : "auto",
                     padding: "0.7rem 1.1rem", borderRadius: 14, background: "var(--color-card)",
                     border: `1px solid ${item.color}28`, maxWidth: 220 }}>
                     <span style={{ fontFamily: "var(--font-body)", fontSize: "0.65rem", color: item.color, fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "0.2rem" }}>{item.time}</span>
@@ -607,8 +617,8 @@ const About = () => (
 
         <motion.div initial={{ opacity: 0, y: 40, rotateX: 5 }} whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.8 }}
+          className="p-5 sm:p-10 lg:p-14"
           style={{
-            padding: "3rem 3.5rem",
             borderRadius: 24,
             background: "rgba(232,160,69,0.04)",
             border: "1px solid rgba(232,160,69,0.18)",

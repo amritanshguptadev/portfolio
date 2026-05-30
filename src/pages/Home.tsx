@@ -241,7 +241,7 @@ const Home = () => {
       }}>
         <div className="flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-20" style={{ maxWidth: 1200, width: "100%" }}>
           {/* Left text block */}
-          <div className="w-full lg:flex-1" style={{ maxWidth: 620 }}>
+          <div className="w-full lg:flex-1 text-center lg:text-left" style={{ maxWidth: 620 }}>
             <motion.div
               initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
               style={{
@@ -257,16 +257,16 @@ const Home = () => {
             </motion.div>
 
             <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.8 }}
-              style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(2.8rem, 6.5vw, 5.5rem)", color: "var(--color-heading)", lineHeight: 1.0, marginBottom: "0.2rem" }}>
+              style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(1.9rem, 6.5vw, 5.5rem)", color: "var(--color-heading)", lineHeight: 1.0, marginBottom: "0.2rem" }}>
               Hi, I'm
             </motion.h1>
             <motion.h1 initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.18, duration: 0.8 }}
-              style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(2.8rem, 6.5vw, 5.5rem)", lineHeight: 1.0, marginBottom: "1.75rem",
+              style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(1.9rem, 6.5vw, 5.5rem)", lineHeight: 1.0, marginBottom: "1.75rem",
                 background: "var(--grad-name)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
               Amritansh Gupta
             </motion.h1>
 
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
+            <motion.div className="justify-center lg:justify-start" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
               style={{ fontFamily: "var(--font-body)", fontSize: "clamp(1rem, 2.4vw, 1.3rem)", color: "var(--color-body)", marginBottom: "1.4rem",
                 minHeight: "2.2em", display: "flex", alignItems: "center", gap: "0.5rem" }}>
               <span style={{ color: "var(--color-accent-gold)", fontWeight: 700, fontSize: "1.2em", fontFamily: "var(--font-heading)" }}>›</span>
@@ -275,6 +275,7 @@ const Home = () => {
             </motion.div>
 
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }}
+              className="mx-auto lg:mx-0"
               style={{ fontFamily: "var(--font-body)", fontSize: "clamp(0.9rem, 1.8vw, 1.05rem)", color: "var(--color-body-muted)", maxWidth: 540, lineHeight: 1.85, marginBottom: "2.8rem" }}>
               CS student at Dev Sanskriti Vishwavidyalaya, Haridwar — building software
               that actually works and feels good to use. From{" "}
