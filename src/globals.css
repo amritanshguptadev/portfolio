@@ -623,3 +623,34 @@ header, footer, nav, main, section,
   }
 }
 
+/* 3. Global Horizontal Scroll Prevention and Lock */
+html, body, #root, .page-content {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+/* 4. Responsive Photo absolute badges */
+.lg-only-badge {
+  display: none !important;
+}
+
+@media (min-width: 1024px) {
+  .lg-only-badge {
+    display: flex !important;
+  }
+}
+
+/* 5. Responsive Hero Section Height & Portrait/Landscape Adaptive Padding */
+.hero-section {
+  min-height: auto !important;
+  padding: 5rem 1.5rem 4rem 1.5rem !important;
+}
+
+@media (min-width: 1024px) and (min-height: 600px) and (min-aspect-ratio: 1.1/1) {
+  .hero-section {
+    min-height: calc(100vh - var(--navbar-height)) !important;
+    padding: 0 1.5rem !important;
+  }
+}
+
+

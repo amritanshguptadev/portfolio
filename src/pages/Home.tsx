@@ -233,10 +233,8 @@ const Home = () => {
       <ParticleCanvas />
 
       {/* ── Hero ── */}
-      <section style={{
-        minHeight: "100vh",
+      <section className="hero-section" style={{
         display: "flex", alignItems: "center", justifyContent: "center",
-        padding: "0 1.5rem",
         position: "relative", zIndex: 1,
       }}>
         <div className="hero-flex-container" style={{ maxWidth: 1200, width: "100%" }}>
@@ -319,7 +317,7 @@ const Home = () => {
                 style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
                 onError={(e) => { (e.target as HTMLImageElement).src = "https://avatars.githubusercontent.com/u/269774892?v=4"; }} />
             </div>
-            <motion.div className="hidden lg:flex" animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3.5 }}
+            <motion.div className="lg-only-badge" animate={{ y: [0, -10, 0] }} transition={{ repeat: Infinity, duration: 3.5 }}
               style={{ position: "absolute", top: 20, left: -80, zIndex: 3, background: "var(--color-nav-bg-mobile)", backdropFilter: "blur(12px)",
                 border: "1px solid var(--color-border-accent)", borderRadius: 12, padding: "0.55rem 1rem",
                 fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 600, color: "var(--color-accent-violet-light)",
@@ -327,7 +325,7 @@ const Home = () => {
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
               Haridwar, India
             </motion.div>
-            <motion.div className="hidden lg:flex" animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 4, delay: 0.7 }}
+            <motion.div className="lg-only-badge" animate={{ y: [0, 10, 0] }} transition={{ repeat: Infinity, duration: 4, delay: 0.7 }}
               style={{ position: "absolute", bottom: 20, right: -95, zIndex: 3, background: "var(--color-nav-bg-mobile)", backdropFilter: "blur(12px)",
                 border: "1px solid rgba(232,160,69,0.4)", borderRadius: 12, padding: "0.55rem 1rem",
                 fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 600, color: "var(--color-accent-gold)",
@@ -335,7 +333,7 @@ const Home = () => {
               <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-accent-gold)"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               1st Place — AI Film Fest
             </motion.div>
-            <motion.div className="hidden lg:flex" animate={{ y: [0, -7, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 1.2 }}
+            <motion.div className="lg-only-badge" animate={{ y: [0, -7, 0] }} transition={{ repeat: Infinity, duration: 4.5, delay: 1.2 }}
               style={{ position: "absolute", bottom: -10, left: -50, zIndex: 3, background: "var(--color-nav-bg-mobile)", backdropFilter: "blur(12px)",
                 border: "1px solid rgba(107,72,255,0.35)", borderRadius: 12, padding: "0.55rem 1rem",
                 fontFamily: "var(--font-body)", fontSize: "0.78rem", fontWeight: 600, color: "var(--color-accent-violet-light)",
