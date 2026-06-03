@@ -282,7 +282,7 @@ const About = () => (
                 border: "3px solid var(--color-photo-border)",
               }}>
                 <img
-                  src="/src/assets/amritansh.png"
+                  src="/my.jpeg"
                   alt="Amritansh Gupta — CS Student, Developer, NCC Cadet"
                   style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
                   onError={(e) => { (e.target as HTMLImageElement).src = "https://avatars.githubusercontent.com/u/269774892?v=4"; }}

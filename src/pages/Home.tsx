@@ -313,7 +313,7 @@ const Home = () => {
               animation: "spinSlow 8s linear infinite", zIndex: 0 }} />
             <div style={{ position: "absolute", inset: -1, borderRadius: "50%", background: "var(--color-bg)", zIndex: 1 }} />
             <div className="relative z-[2] w-[270px] h-[270px] xs:w-[300px] xs:h-[300px] sm:w-[340px] sm:h-[340px] rounded-full overflow-hidden" style={{ background: "var(--color-photo-bg)" }}>
-              <img src="/src/assets/amritansh.png" alt="Amritansh Gupta — CS Student & Developer"
+              <img src="/my.jpeg" alt="Amritansh Gupta — CS Student & Developer"
                 style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "top center", display: "block" }}
                 onError={(e) => { (e.target as HTMLImageElement).src = "https://avatars.githubusercontent.com/u/269774892?v=4"; }} />
             </div>
